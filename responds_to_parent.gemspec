@@ -9,6 +9,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Mark Catley"]
   s.email       = ["plerohellec@yammer-inc.com"]
   
-  s.files        = Dir.glob("lib/**/*") + %w(README Rakefile MIT-LICENSE)
+  s.files        = Dir.glob("{rails,lib}/**/*") + %w(README Rakefile MIT-LICENSE)
   s.test_files   = Dir.glob("{test,examples}/**/*")
 end
