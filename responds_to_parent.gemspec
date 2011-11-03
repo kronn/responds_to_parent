@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'yammer-responds_to_parent'
+  s.name        = 'yam-responds_to_parent'
   s.version     = '1.0.1'
   s.homepage    = 'http://github.com/yammer/responds_to_parent'
   s.summary     = "[Rails] Adds 'responds_to_parent' to your controller to " +
