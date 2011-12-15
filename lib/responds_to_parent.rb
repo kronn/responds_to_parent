@@ -11,19 +11,12 @@ module RespondsToParent
       # We're returning HTML instead of JS or XML now
       response.headers['Content-Type'] = 'text/html; charset=UTF-8'
 
-      # HORRIBLE IN PLACE EDITING THAT WILL SEND ME TO HELL -zp
-      erase_redirect_results
-      script = response.body
- 
-      # Either pull out a redirect or the request body
-      #--------------------------------------------------
-      # script =  if location = erase_redirect_results
-      #             "document.location.href = #{location.to_s.inspect}"
-      #           else
-      #             response.body
-      #           end
-      #-------------------------------------------------- 
-                
+      if response.headers['Location']
+        script = "document.location.href = #{location.to_s.inspect}"
+      else
+        script = response.body
+      end
+      
       # Escape quotes, linebreaks and slashes, maintaining previously escaped slashes
       # Suggestions for improvement?
       script = (script || '').
@@ -33,7 +26,7 @@ module RespondsToParent
         gsub('</script>','</scr"+"ipt>')
 
       # Clear out the previous render to prevent double render
-      erase_results
+      self.instance_variable_set(:@_response_body, nil)
       
       # Eval in parent scope and replace document location of this frame 
       # so back button doesn't replay action on targeted forms
@@ -50,3 +43,5 @@ module RespondsToParent
   alias respond_to_parent responds_to_parent
 end
 
+ActionController::Base.send :include, RespondsToParent
+require 'parent_selector_assertion'
